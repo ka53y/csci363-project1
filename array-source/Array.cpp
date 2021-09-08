@@ -9,7 +9,7 @@
 
 Array::Array (void)
 {
-
+ //declare
 }
 
 Array::Array (size_t length)
