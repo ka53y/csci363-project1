@@ -7,19 +7,28 @@
 
 #include "Array.h"
 
-Array::Array (void)
-{
- //declare
+Array::Array (void)//:data_(), cur_size_(0), max_size_(0)
+{ 
+    //declare
+    data_ = nullptr;
+    cur_size_ = 0;
+    max_size_ = 0;
 }
 
-Array::Array (size_t length)
+Array::Array (size_t length)//: cur_size_(length), max_size_(length)
 {
-
+    cur_size_ = 0;
+    max_size_ = length;
+    ///char * data_[length];
+    //todo initialize array
 }
 
-Array::Array (size_t length, char fill)
+Array::Array (size_t length, char fill)//: cur_size_(length), max_size_(length)
 {
-
+    cur_size_ = length;
+    max_size_ = length;
+    ///char * data_ = new char [length] {fill};
+    //todo intialize array and fill array
 }
 
 
@@ -50,17 +59,21 @@ const char & Array::operator [] (size_t index) const
 
 char Array::get (size_t index) const
 {
+    return data_[index];
+    //todo: throw an exception if its out of range below 0 or above max value
 
 }
 
 void Array::set (size_t index, char value)
 {
-
+    //setting the char value at the location index in the array data_
+    data_[index] = value;
+    // TODO: throw an exception if it is out of range
 }
 
 void Array::resize (size_t new_size)
 {
-
+    //destroy the array save values and add the values to a new array of size new_size
 }
 
 int Array::find (char ch) const
