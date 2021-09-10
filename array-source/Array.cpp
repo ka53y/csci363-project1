@@ -82,9 +82,10 @@ const char & Array::operator [] (size_t index) const
 
 char Array::get (size_t index) const
 {
+    char returnValue;
     try
     {
-        data_[index] = "x";
+        returnValue = data_[index];
     }
     catch(const std::exception& e)
     {
@@ -114,10 +115,24 @@ void Array::set (size_t index, char value)
 void Array::resize (size_t new_size)
 {
     char newArr[new_size];
-    for (size_t i = 0; i < new_size; i++)
+    if (new_size != cur_size_)
     {
-        newArr[i] = data_[i];
+        for (size_t i = 0; i < new_size; i++)
+        {
+            newArr[i] = data_[i];
+        }
+        delete[] data_;
+        char * data_;
+        data_ = new char[new_size];
+        for (size_t i = 0; i < new_size; i++)
+        {
+            data_[i] = newArr[i];
+        }
+        
+        /* code */
     }
+    
+
 
     
     //destroy the array save values and add the values to a new array of size new_size
