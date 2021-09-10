@@ -44,11 +44,13 @@ Array::Array (size_t length, char fill)//: cur_size_(length), max_size_(length)
 
 Array::Array (const Array & array)
 {
- 
+ char* data_[max_size_] = {nullptr};
+
 }
 
 Array::~Array (void)
 {
+    delete[] data_, max_size_, cur_size_;
 
 }
 
@@ -77,7 +79,17 @@ char & Array::operator [] (size_t index)
 
 const char & Array::operator [] (size_t index) const
 {
-
+    char returnValue;
+    try
+    {
+        returnValue = data_[index];
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    return returnValue;
+}
 }
 
 char Array::get (size_t index) const
