@@ -22,6 +22,8 @@ Array::Array (size_t length)//: cur_size_(length), max_size_(length)
     max_size_ = length;
     ///char * data_[length];
     //todo initialize array
+    char* arrData;
+    arrData = new char[length];
 }
 
 Array::Array (size_t length, char fill)//: cur_size_(length), max_size_(length)
@@ -30,6 +32,13 @@ Array::Array (size_t length, char fill)//: cur_size_(length), max_size_(length)
     max_size_ = length;
     ///char * data_ = new char [length] {fill};
     //todo intialize array and fill array
+    char* arrData;
+    arrData = new char[length];
+    for (size_t i = 0; i < length; i++)
+    {
+        arrData[i] = fill;
+    }
+    
 }
 
 
@@ -45,12 +54,25 @@ Array::~Array (void)
 
 const Array & Array::operator = (const Array & rhs)
 {
-
+   for (size_t i = 0; i < cur_size_; i++)
+   {
+       data_[i] = rhs[i];
+   }
+   
 }
 
 char & Array::operator [] (size_t index)
 {
-
+   char returnValue;
+   try
+   {
+       returnValue = data_[index];
+   }
+   catch(const std::exception& e)
+   {
+       std::cerr << e.what() << '\n';
+   }
+   return returnValue;
 }
 
 const char & Array::operator [] (size_t index) const
