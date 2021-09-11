@@ -22,8 +22,8 @@ Array::Array (size_t length)//: cur_size_(length), max_size_(length)
     max_size_ = length;
     ///char * data_[length];
     //todo initialize array
-    char* arrData;
-    arrData = new char[length];
+    char* data_;
+    data_ = new char[length];
 }
 
 Array::Array (size_t length, char fill)//: cur_size_(length), max_size_(length)
@@ -32,11 +32,11 @@ Array::Array (size_t length, char fill)//: cur_size_(length), max_size_(length)
     max_size_ = length;
     ///char * data_ = new char [length] {fill};
     //todo intialize array and fill array
-    char* arrData;
-    arrData = new char[length];
+    char* data_;
+    data_ = new char[length];
     for (size_t i = 0; i < length; i++)
     {
-        arrData[i] = fill;
+        data_[i] = fill;
     }
     
 }
@@ -89,7 +89,6 @@ const char & Array::operator [] (size_t index) const
         std::cerr << e.what() << '\n';
     }
     return returnValue;
-}
 }
 
 char Array::get (size_t index) const
@@ -246,7 +245,6 @@ Array Array::slice (size_t begin) const
       slicedArr[i] = data_[i];
   }
   return pArr;
-  
 }
 
 Array Array::slice (size_t begin, size_t end) const
