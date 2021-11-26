@@ -156,7 +156,7 @@ public:
    * @retval          -1                   Character not found
    * @exception       std::out_of_range    Invalid index
    */
-  int find (char ch, size_t start) const;
+  size_t find (char ch, size_t start) const;
 
   /**
    * Test the array for equality.

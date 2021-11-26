@@ -35,9 +35,8 @@ Array::Array(size_t length)
 // 
 //moved initialization into brackets and seperated by line to make it easier to read errors
 {
-    cur_size_ = 0;
+    cur_size_ = length;
     max_size_ = length;
-    char* data_;
     data_ = new char[length];
 }
 
@@ -50,7 +49,6 @@ Array::Array(size_t length, char fill)
 {
     cur_size_ = length;
     max_size_ = length;
-    char* data_;
     data_ = new char[length];
     for (size_t i = 0; i < length; i++)
     {
@@ -64,9 +62,14 @@ Array::Array(const Array& array)
 // COMMENT Initialize all member variables in the base member initialization section
 // of the constructor on its own line. Otherwise, it is hard to know what initialization
 // has an error since it will not have its own unique line number.RESOLVED
-{
+{   
+    cur_size_ = cur_size_;
+    max_size_ = max_size_;
     char* deepCopy = new char;
-    *deepCopy = *(data_);
+    for (size_t i = 0; i < max_size_; i++)
+    {
+        deepCopy[i] = data_[i];
+    }
     //deep copy the array 
     
     // COMMENT The copy constructor needs to create a deep copy of the source array.RESOLVED
@@ -117,7 +120,7 @@ char& Array::operator [] (size_t index)
         returnValue = data_[index];
     }
     else {
-        throw std::out_of_range("value is not in the proper range");
+        throw "value is not in the proper range";
     }
     return data_[index];
 }
@@ -137,7 +140,7 @@ const char& Array::operator [] (size_t index) const
         returnValue = data_[index];
     }
     else {
-        throw std::out_of_range("value is not in the proper range");
+        throw "value is not in the proper range";
     }
     return data_[index];
 }
@@ -157,8 +160,9 @@ char Array::get(size_t index) const
         returnValue = data_[index];
     }
     else {
-        throw std::out_of_range("value is not in the proper range");
+        throw "value is not in the proper range";
     }
+    std::cout << returnValue << std::endl;
     return data_[returnValue];
     //todo: throw an exception if its out of range below 0 or above max value
 
@@ -176,12 +180,17 @@ void Array::set(size_t index, char value)
     //setting the char value at the location index in the array data_
 
     //try throws an error without catch statement so manually added exception if the index is out of bounds it throws an exception if not out of bounds then array data at index is = to value
-    if (index >= 0 && index < sizeof(data_)) {
+    //std::cout << max_size_ << std::endl;
+    //std::cout << index << std::endl;
+
+    if (index >= 0 && index < max_size_) {
         data_[index] = value;
+        std::cout << "hit" << std::endl;
     }
     else {
-        throw std::out_of_range("value is not in the proper range");
+        throw "value is not in the proper range";
     }
+    
     // TODO: throw an exception if it is out of range
 }
 
@@ -195,19 +204,26 @@ void Array::resize(size_t new_size)
     //Resolved I think, removing the intialization for the pointer to declare the size should fix this comment I think. 
 
     char *newArr = new char[new_size];
-    if (new_size != cur_size_)
+    if (new_size > max_size_)
     {
         for (size_t i = 0; i < new_size; i++)
         {
             newArr[i] = data_[i];
+            //std::cout << newArr[i] << std::endl;
         }
 
         // COMMENT There is no need to do a double copy for the data to resize
         // the array. Just create a new arary, copy over the data, and then swap
         // the pointers. RESOLVED
-        *data_ = *newArr;
-    }
+        this->cur_size_ = new_size;
+        delete[] data_;
+        data_ = newArr;
 
+    }
+    else {
+        this->cur_size_ = new_size;
+    }
+    std::cout << "hit" << std::endl;
 
     //new array with the values of data_ then switch the pointers
 
@@ -219,6 +235,7 @@ int Array::find(char ch) const
     for (int i = 0; i < cur_size_; i++)
     {
         if (data_[i] == ch) {
+            std::cout << i << std::endl;
             return i;
         }
     }
@@ -228,11 +245,12 @@ int Array::find(char ch) const
 
 }
 
-int Array::find(char ch, size_t start) const
+size_t Array::find(char ch, size_t start) const
 {
     for (size_t i = start; i < cur_size_; i++)
     {
         if (data_[i] == ch) {
+            std::cout << i << std::endl;
             return i;
         }
     }
@@ -322,10 +340,11 @@ void Array::reverse(void)
 
 Array Array::slice(size_t begin) const
 {
-    char* slicedArr = new char[cur_size_];
-    for (size_t i = begin; i < cur_size_; i++)
+    char* slicedArr = new char[this->cur_size_];
+    for (size_t i = begin; i < this->cur_size_; i++)
     {
         slicedArr[i] = data_[i];
+        //std::cout << slicedArr[i] << std::endl;
     }
     return *slicedArr;
 
@@ -334,12 +353,12 @@ Array Array::slice(size_t begin) const
 
 Array Array::slice(size_t begin, size_t end) const
 {
-    char* slicedArr = new char[cur_size_];
+    char* slicedArr = new char[this->cur_size_];
     for (size_t i = begin; i < end; i++)
     {
         slicedArr[i] = data_[i];
+        //std::cout << slicedArr[i] << std::endl;
     }
     return *slicedArr;
-
     //creates a a new array and begins the iterations at the parameter start value and ends them at parameter end value from data array
 }
